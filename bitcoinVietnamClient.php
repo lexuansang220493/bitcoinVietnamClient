@@ -106,5 +106,14 @@ class bitcoinVietnamClient{
         return $response;
     }
 
+    public function sell($amount){
 
+        $params = array(
+            'method' => 'sell',
+            'amount' => (float)$amount
+        );
+
+        $response = $this->query($params);
+        return $response;
+    }
 }

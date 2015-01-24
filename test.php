@@ -10,9 +10,7 @@ $apiSecret = '6118f18b832676d6837df733ff0b7db5d941f2339d5752f8e5743a779e1ad426fa
 $apiUrl = 'http://192.168.0.15/bitcoinvietnammvc/public/api/v2';
 
 $bitcoinVietnam = new bitcoinVietnamClient($apiKey, $apiSecret, $apiUrl);
-$price = $bitcoinVietnam->price('buy');
-$price = $price['response'];
-$rsp = $bitcoinVietnam->buy('bitcoin', 1, $price, 'WALLET');
+$rsp = $bitcoinVietnam->sell(0.1);
 
 ?>
 

@@ -10,7 +10,6 @@ class bitcoinVietnamClient{
         $this->apiKey = trim($apiKey);
         $this->apiSecret = trim($apiSecret);
         $this->url = $url;
-
         $this->status() == 'up' ? $rsp = $this : $rsp = false;
         return $rsp;
     }
@@ -44,29 +43,30 @@ class bitcoinVietnamClient{
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         $res = json_decode(curl_exec($curl), TRUE);
 
+        $res['error'] ? $this->error = $res['error'] : null;
         return $res;
     }
 
     public function status(){
-        $params = array('method' => 'status');
+        $params = array('method' => (string)'status');
         $response = $this->query($params);
         return $response;
     }
 
     public function ticker(){
-        $params = array('method' => 'ticker');
+        $params = array('method' => (string)'ticker');
         $response = $this->query($params);
         return $response;
     }
 
     public function dailydata(){
-        $params = array('method' => 'dailydata');
+        $params = array('method' => (string)'dailydata');
         $response = $this->query($params);
         return $response;
     }
 
     public function account(){
-        $params = array('method' => 'account');
+        $params = array('method' => (string)'account');
         $response = $this->query($params);
         return $response;
     }
@@ -76,8 +76,8 @@ class bitcoinVietnamClient{
         $side != 'buy' && $side != 'sell' ? $side = 'buy' : null;
 
         $params = array(
-            'method' => 'price',
-            'side' => $side
+            'method' => (string)'price',
+            'side' => (string)$side
         );
 
         $response = $this->query($params);
@@ -93,7 +93,7 @@ class bitcoinVietnamClient{
          */
 
         $params = array(
-            'method' => 'buy',
+            'method' => (string)'buy',
             'amountType' => (string)$amountType,
             'amount' => (float)$amount,
             'price' => (float)$price
@@ -109,7 +109,7 @@ class bitcoinVietnamClient{
     public function sell($amount){
 
         $params = array(
-            'method' => 'sell',
+            'method' => (string)'sell',
             'amount' => (float)$amount
         );
 

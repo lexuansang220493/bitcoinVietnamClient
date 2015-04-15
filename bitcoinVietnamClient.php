@@ -116,4 +116,14 @@ class bitcoinVietnamClient{
         $response = $this->query($params);
         return $response;
     }
+
+    public function orderstatus($orderId) {
+
+        $params = array(
+            'method' => 'orderstatus',
+            'id' => $orderId
+        );
+        $response = $this->query($params);
+        return $response;
+    }
 }

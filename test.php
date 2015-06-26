@@ -11,4 +11,4 @@ $rsp = $bitcoinVietnam->account();
 
 ?>
 
-<pre><?=print_r($rsp)?></pre>
+<pre><?=var_dump($rsp)?></pre>

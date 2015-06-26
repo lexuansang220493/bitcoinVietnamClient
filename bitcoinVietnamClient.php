@@ -24,6 +24,13 @@ class bitcoinVietnamClient{
         return $signature;
     }
 
+    public static function removeUtf8Bom($text)
+    {
+        $bom = pack('H*','EFBBBF');
+        $text = preg_replace("/^$bom/", '', $text);
+        return $text;
+    }
+
     public function query($array){
         $array['nonce'] = intval(time());
         $params = $this->params($array);
@@ -41,8 +48,10 @@ class bitcoinVietnamClient{
         curl_setopt($curl,CURLOPT_POSTFIELDS, $array);
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        $res = json_decode(curl_exec($curl), TRUE);
-
+        $res = curl_exec($curl);
+        $res = iconv("UTF-8","UTF-8//IGNORE",$res);
+        $res = bitcoinVietnamClient::removeUtf8Bom($res);
+        $res = json_decode($res, TRUE);
         $res['error'] ? $this->error = $res['error'] : null;
         return $res;
     }
@@ -123,6 +132,7 @@ class bitcoinVietnamClient{
             'method' => 'orderstatus',
             'id' => $orderId
         );
+
         $response = $this->query($params);
         return $response;
     }
